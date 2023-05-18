@@ -16,19 +16,21 @@ class RandomUserApi:
 	class RandomUserException(Exception):
 		pass
 	
-	def _get(self, endpoint_uri):
+	def get_data(self):
 		response = None
-		for attempt in range(self.retry_count):
+		retry_count_int = int(self.retry_count)
+		retry_sleep_int = int(self.retry_sleep)
+		for attempt in range(retry_count_int):
 			try:
-				response = requests.get(endpoint_uri)
+				response = requests.get(self.root_uri)
 				if response.status_code == 404:
-					logging.error(f"attempted contacting {endpoint_uri}")
+					logging.error(f"attempted contacting {self.root_uri}")
 					logging.error(f"got response: {response.text}")
 					return None
 				else:
 					response.raise_for_status()
 			except requests.exceptions.Timeout as e:
-				sleep(self.retry_sleep)
+				sleep(retry_sleep_int)
 			except requests.exceptions.HTTPError as e:
 				if response:
 					logging.error(f"got response: {response.text}")
@@ -40,5 +42,14 @@ class RandomUserApi:
 			else:
 				return response.json()
 		else:
-			logging.error(f"{endpoint_uri}, returned an unexpected response!")
+			logging.error(f"{self.root_uri}, returned an unexpected response!")
 			raise self.RandomUserException()
+	
+	def get_status(self):
+		response = requests.get(self.root_uri)
+		if response.status_code >= 400:
+			logging.error("Error response")
+			return None
+		else:
+			return response.status_code
+			
