@@ -11,6 +11,6 @@ core = Blueprint('core', __name__)
 
 
 # ---------- ROUTE: INDEX ----------
-@core.route('/index', methods=['GET', 'POST'])
+@core.route('/', methods=['GET', 'POST'])
 def index():
 	return render_template('index.html')
