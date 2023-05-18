@@ -9,8 +9,12 @@ def create_app():
 	return app
 
 
-# -----------------------------Assigning the created app to APP-----------------------------------
+# ---------- Assigning the created app to APP ----------
 APP = create_app()
 
-# --------------------------Initializing the SQLAlchemy with APP to db----------------------------
+# ---------- Initializing the SQLAlchemy with APP to db ----------
 db = SQLAlchemy(APP)
+
+# ---------- Registering the Blueprints for the views ----------
+from project.core.views import core
+APP.register_blueprint(core)
