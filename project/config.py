@@ -9,8 +9,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = os.getenv('SECRET_KEY')
 FLASK_ENV = 'development'
 TESTING = True
-STATIC_FOLDER = '../static'
-TEMPLATES_FOLDER = '../templates'
+STATIC_FOLDER = '../project/static'
+TEMPLATES_FOLDER = '../project/templates'
 FILE_FOLDER = "D:\\Projects\\Files"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
