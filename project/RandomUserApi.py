@@ -22,6 +22,7 @@ class RandomUserApi:
 		retry_sleep_int = int(self.retry_sleep)
 		for attempt in range(retry_count_int):
 			try:
+				logging.info(f"Attempting to contact: {self.root_uri}")
 				response = requests.get(self.root_uri)
 				if response.status_code == 404:
 					logging.error(f"attempted contacting {self.root_uri}")
@@ -40,6 +41,7 @@ class RandomUserApi:
 					logging.error(f"got response: {response.text}")
 				raise self.RandomUserException(e)
 			else:
+				logging.info("Valid response received!")
 				return response.json()
 		else:
 			logging.error(f"{self.root_uri}, returned an unexpected response!")

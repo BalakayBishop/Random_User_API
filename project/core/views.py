@@ -34,8 +34,7 @@ def get_json():
 		else:
 			return None
 	except RandomUserApi.RandomUserException as e:
-		logging.error(f'Exit Code 1, {e}')
-		sys.exit(1)
+		logging.error(f'Exception caught from getting json: {e}')
 
 
 # ---------- ROUTE: INDEX ----------
